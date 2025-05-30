@@ -8,5 +8,5 @@ if __name__ == "__main__":
         packages=find_packages(include=['sammcitrixcloud', 'sammcitrixcloud.*']),
         scripts=[],
         data_files=[],
-        install_requires=[ 'python-odata' ]
+        install_requires=[ 'python-odata', 'requests' ]
     )
