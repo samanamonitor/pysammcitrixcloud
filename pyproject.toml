@@ -1,0 +1,11 @@
+[build-system]
+requires = [ "setuptools>=40.8.0" ]
+
+[project]
+name = "sammcitrixcloud"
+dynamic = ["version"]
+dependencies = [
+	"python-odata",
+	"requests"
+	]
+
