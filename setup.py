@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-from sammcitrixcloud import __version__
+from sammcitrixcloud.version import __version__
 
 if __name__ == "__main__":
     setup(
@@ -8,5 +8,5 @@ if __name__ == "__main__":
         packages=find_packages(include=['sammcitrixcloud', 'sammcitrixcloud.*']),
         scripts=[],
         data_files=[],
-        install_requires=[ 'python-odata', 'requests' ]
+        install_requires=[ 'python-odata' ]
     )

@@ -1,8 +1,5 @@
 from requests import post
-
 from .sammodata4 import OdataQuery4
-
-__version__ = 0.1
 
 class SammOdataCitrixCloud:
 	def __init__(self, customer_id, client_id, client_secret, 
