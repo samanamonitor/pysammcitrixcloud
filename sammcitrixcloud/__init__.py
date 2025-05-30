@@ -2,10 +2,10 @@ __version__ = 0.1
 
 try:
 	from requests import post
+	from .sammodata4 import OdataQuery4
 except:
 	pass
 
-from .sammodata4 import OdataQuery4
 
 class SammOdataCitrixCloud:
 	def __init__(self, customer_id, client_id, client_secret, 
