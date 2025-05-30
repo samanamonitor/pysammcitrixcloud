@@ -1,4 +1,10 @@
-from requests import post
+__version__ = 0.1
+
+try:
+	from requests import post
+except:
+	pass
+
 from .sammodata4 import OdataQuery4
 
 class SammOdataCitrixCloud:

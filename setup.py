@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-from sammcitrixcloud.version import __version__
+from sammcitrixcloud import __version__
 
 if __name__ == "__main__":
     setup(
