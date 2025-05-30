@@ -58,8 +58,8 @@ class OdataQuery4:
 		self._query = self._service.query(self._entity)
 		if self._filter is not None:
 			self._query.filter(self._filter)
-		if self._expand is not None:
-			self._query.expand(self._expand)
+		for e in self._expand.split(","):
+			self._query = self._query.expand(getattr(self.entity, e))
 		self._es_iterator = iter(self._query)
 		return self
 
