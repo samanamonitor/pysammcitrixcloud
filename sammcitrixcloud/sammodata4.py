@@ -15,7 +15,10 @@ class OdataEntry4:
 		return key in self._props
 
 	def get(self, key, default=None):
-		return getattr(self, key, default)
+		ret = self._entry
+		for i in key.split('.'):
+			ret = getattr(ret, i, default)
+		return ret
 
 	def __getitem__(self, key):
 		return getattr(self, key)
@@ -42,14 +45,18 @@ class OdataQuery4:
 		self._http_session.headers.update(headers)
 		self._expand = expand
 		self._filter = filter
-		session = Session()
-		session.headers.update(headers)
+		reflect_entities = False
+		try:
+			self._lib = importlib.import_module("generated.citrix")
+		except ModuleNotFoundError:
+			reflect_entities = True
+
 		self._service = ODataService(
 			url=self._service_url,
-			session=session,
-			reflect_entities=True,
+			session=self._http_session,
+			reflect_entities=reflect_entities,
 			reflect_output_package="generated.citrix")
-		self._lib = importlib.import_module("generated.citrix")
+
 		self._entity = getattr(self._lib, entity)
 		if not isinstance(self._entity, type):
 			raise TypeError(f"Entity {entity} doesn't exist")
@@ -57,9 +64,10 @@ class OdataQuery4:
 	def __iter__(self):
 		self._query = self._service.query(self._entity)
 		if self._filter is not None:
-			self._query.filter(self._filter)
+			self._query = self._query.filter(self._filter)
 		for e in self._expand.split(","):
-			self._query = self._query.expand(getattr(self.entity, e))
+			self._query = self._query.expand(getattr(self._entity, e))
+			self._query = self._query.filter(getattr(self._entity, f"{e}Id").not_null())
 		self._es_iterator = iter(self._query)
 		return self
 
